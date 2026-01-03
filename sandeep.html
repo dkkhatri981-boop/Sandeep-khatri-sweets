@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandeep Sweets | The Royal Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --primary-dark: #4a0404;
+  --primary-red: #800000;
+  --gold: #D4AF37;
+  --gold-light: #F4E29E;
+  --cream: #FFFBF2;
+  --glass-surface: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --shadow-soft: 0 20px 40px rgba(0,0,0,0.1);
+  --shadow-hover: 0 30px 60px rgba(128, 0, 0, 0.25);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #1a0505; 
+  color: #333;
+  overflow-x: hidden;
+  position: relative;
+}
+
+
+.live-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #2b0505, #5c0a0a);
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: floatOrb 20s infinite alternate ease-in-out;
+}
+
+.orb-1 { width: 50vw; height: 50vw; background: #800000; top: -10%; left: -10%; animation-duration: 25s; }
+.orb-2 { width: 40vw; height: 40vw; background: #D4AF37; bottom: -10%; right: -10%; animation-duration: 30s; animation-delay: -5s; }
+.orb-3 { width: 30vw; height: 30vw; background: #ff4d4d; top: 40%; left: 40%; animation-duration: 22s; opacity: 0.3; }
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+
+nav {
+  position: sticky;
+  top: 20px;
+  width: 90%;
+  margin: 0 auto;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+nav a {
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  position: relative;
+  transition: 0.4s;
+}
+
+nav a::after {
+  content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+  background: var(--gold); transition: 0.4s;
+}
+
+nav a:hover { color: #fff; text-shadow: 0 0 10px var(--gold); }
+nav a:hover::after { width: 100%; }
+
+.hero {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 5rem;
+  color: transparent;
+  background: linear-gradient(to bottom, #fff, #F4E29E);
+  -webkit-background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+  margin-bottom: 20px;
+  animation: fadeInUp 1.5s ease;
+}
+
+.hero p {
+  color: #ddd;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  animation: fadeInUp 1.5s ease 0.3s backwards;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  color: var(--gold);
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+}
+
+.section { padding: 100px 20px; max-width: 1400px; margin: auto; }
+
+.section-title {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-title h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  color: var(--cream);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.section-title div {
+  width: 100px; height: 3px; background: var(--gold); margin: 20px auto;
+  box-shadow: 0 0 15px var(--gold);
+}
+
+/* Premium Cards */
+.menu-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.item {
+  width: 300px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  opacity: 0; /* For scroll reveal */
+  transform: translateY(50px);
+}
+
+.item:hover {
+  transform: translateY(-15px) scale(1.03);
+  background: rgba(255,255,255,0.08);
+  border-color: var(--gold);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.img-box {
+  width: 100%; height: 250px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.item:hover img { transform: scale(1.15); }
+
+.item-content { text-align: center; color: #fff; }
+
+.item h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--cream);
+}
+
+.price-tag {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 25px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 50px;
+  font-weight: 700;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.price-tag:hover {
+  background: var(--gold);
+  color: #1a0505;
+  box-shadow: 0 0 15px var(--gold);
+}
+
+/* Contact Section */
+.contact-glass {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 60px;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-glass::before {
+  content:''; position: absolute; top:-50%; left:-50%; width:200%; height:200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  animation: shine 6s infinite;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 15px;
+}
+
+.whatsapp-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 30px;
+  background: linear-gradient(45deg, #128C7E, #25D366);
+  color: white; padding: 15px 40px; border-radius: 50px;
+  font-weight: bold; text-decoration: none; font-size: 1.1rem;
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+  transition: 0.3s;
+}
+
+.whatsapp-btn:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5); }
+
+footer {
+  text-align: center; padding: 50px; color: var(--gold);
+  background: rgba(0,0,0,0.8);
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+@keyframes shine { 0% {left: -100%;} 20% {left: 100%;} 100% {left: 100%;} }
+
+/* Scroll Reveal Class */
+.visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+</style>
+</head>
+
+<body>
+
+<div class="live-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav>
+  <a href="#menu-page">Home</a>
+  <a href="#menu">Collection</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<div class="hero" id="menu-page">
+  <h1>Sandeep Sweets</h1>
+  <p>The Taste of Royalty • Est 2026</p>
+  <div class="scroll-indicator">↓</div>
+</div>
+
+<section id="menu" class="section">
+  <div class="section-title">
+    <h2>The Grand Menu</h2>
+    <div></div>
+  </div>
+
+  <div class="menu-items">
+    <div class="item">
+      <div class="img-box"><img src="123.jpg" alt="Bhujia"></div>
+      <div class="item-content">
+        <h3>Royal Bhujia</h3>
+        <a href="https://wa.link/r3cycp" class="price-tag">₹700 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="349.jpg" alt="Daal"></div>
+      <div class="item-content">
+        <h3>Daal Fry</h3>
+        <a href="https://wa.link/tez2d9" class="price-tag">₹700 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="00.jpg" alt="Paprey"></div>
+      <div class="item-content">
+        <h3>Crispy Paprey</h3>
+        <a href="https://wa.link/utnsi5" class="price-tag">₹700 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="4.jpg" alt="Pakora"></div>
+      <div class="item-content">
+        <h3>Shahi Pakora</h3>
+        <a href="https://wa.link/xsyt8d" class="price-tag">₹700 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="5.jpg" alt="Laddu"></div>
+      <div class="item-content">
+        <h3>Moti Laddu</h3>
+        <a href="https://wa.link/4fy4xr" class="price-tag">₹600 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="99.jpg" alt="Massu"></div>
+      <div class="item-content">
+        <h3>Massu Special</h3>
+        <a href="https://wa.link/mhbgpg" class="price-tag">₹600 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="88.jpg" alt="Jalebi"></div>
+      <div class="item-content">
+        <h3>Kesar Jalebi</h3>
+        <a href="https://wa.link/i9gcjq" class="price-tag">₹600 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="50.jpg" alt="Nukti"></div>
+      <div class="item-content">
+        <h3>Sweet Nukti</h3>
+        <a href="https://wa.link/uucq4o" class="price-tag">₹600 / kg</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-box"><img src="8.jpg" alt="Besan"></div>
+      <div class="item-content">
+        <h3>Pure Besan</h3>
+        <a href="https://wa.link/td65ti" class="price-tag">₹600 / kg</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="contact-glass">
+    <h2 style="font-family:'Cinzel', serif; font-size:2.5rem; margin-bottom:30px;">Contact Us</h2>
+    
+    <div class="contact-row">
+      <span>💳</span> <span><b>Easy Paisa:</b> 0317-3203848</span>
+    </div>
+    <div class="contact-row">
+      <span>💬</span> <span><b>WhatsApp:</b> 0333-7157103</span>
+    </div>
+    <div class="contact-row">
+      <span>📍</span> <span><b>Location:</b> Near Murlidhar Mandir, New Chor</span>
+    </div>
+
+    <a href="https://wa.link/yosbhh" target="_blank" class="whatsapp-btn">
+      Chat on WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Rajnesh Kumar | All Rights are Reserved</p>
+</footer>
+
+<script>
+  // Advanced Reveal on Scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Stagger effect based on index isn't directly available in observer, 
+        // so we use a small timeout or CSS delay. 
+        // Here we just add the class.
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100); 
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.item').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
